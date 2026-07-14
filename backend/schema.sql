@@ -2,7 +2,7 @@
 -- Stores both students (who interact via SMS/Web) and teachers (who use the grading app)
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    role TEXT NOT NULL CHECK (role IN ('student', 'teacher', 'admin')),
+    role TEXT NOT NULL CHECK (role IN ('student', 'teacher')),
     name TEXT NOT NULL,
     phone_number TEXT UNIQUE, -- Useful for SMS/USSD learning loop
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
