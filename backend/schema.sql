@@ -13,10 +13,11 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS lessons (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
+    subject TEXT NOT NULL,
     content_type TEXT NOT NULL CHECK (content_type IN ('pdf', 'video', 'sms_riddle')),
     file_path TEXT, -- Nullable, used if the content is a file on the Raspberry Pi
     sms_content TEXT, -- Nullable, used if the content is an SMS riddle
-    difficulty_level INTEGER DEFAULT 1, -- To generate the student's next lesson based on progress
+    class INTEGER NOT NULL, -- To generate the student's next lesson based on progress
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
