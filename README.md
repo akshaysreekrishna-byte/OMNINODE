@@ -24,10 +24,16 @@ OMNINODE/
 ├── backend/
 │   ├── db/
 │   │   ├── omninode.db           # SQLite database file
-│   │   └── schema.sql            # Database schema definitions
-│   ├── init_db.js                # Database initialization & seeding script
-│   ├── database.js               # better-sqlite3 database connection helper
-│   ├── server.js                 # Fastify API server
+│   │   ├── database.js           # Database connection and singleton
+│   │   ├── init_db.js            # Database initialization & seeding script
+│   │   └── schema.sql            # Hierarchical curriculum schema
+│   ├── src/
+│   │   ├── controllers/          # Business logic and request handling
+│   │   ├── models/               # Raw database SQL queries
+│   │   ├── plugins/              # Fastify plugins
+│   │   └── routes/               # API route definitions
+│   ├── tests/                    # Integration and unit tests (node:test)
+│   ├── server.js                 # Fastify API server entry point
 │   ├── package.json              # Backend dependencies (fastify, better-sqlite3)
 │   └── package-lock.json
 │
@@ -56,7 +62,7 @@ Before running the server, compile the SQLite schema and seed mock data:
 ```bash
 cd backend
 npm install
-node init_db.js
+node db/init_db.js
 ```
 
 ### 2. Run the Fastify Backend
