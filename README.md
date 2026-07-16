@@ -2,13 +2,13 @@
 
 This is a minimalist, mobile-first educational web platform designed to run offline on a Raspberry Pi. It provides a decentralized, offline-first dashboard for student lessons, interactive quizzes, and simulated AI-driven OCR homework grading.
 
-The platform is optimized to be served directly from a Raspberry Pi hotspot via Nginx, utilizing a reactive Svelte frontend and a fast Fastify backend backed by a lightweight SQLite database.
+The platform is optimized to be served directly from a Raspberry Pi hotspot via Nginx, utilizing a minimalist Vanilla JS frontend and a fast Fastify backend backed by a lightweight SQLite database.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** [Svelte](https://svelte.dev/) + Vanilla HTML/CSS/JS (compiled to high-performance, static SPA assets via Vite).
+- **Frontend:** Vanilla HTML/CSS/JS (compiled to high-performance, static assets via Vite).
 - **Backend:** [Fastify](https://fastify.dev/) (ultrafast, low-overhead Node.js web framework).
 - **Database:** [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) (very fast, synchronous SQLite3 library for Node.js).
 - **Web Server & Reverse Proxy:** [Nginx](https://nginx.org/) running on Raspberry Pi OS.
@@ -34,15 +34,10 @@ OMNINODE/
 ├── frontend/
 │   ├── public/                   # Static assets (images, offline videos)
 │   ├── src/
-│   │   ├── components/
-│   │   │   ├── Breadcrumbs.svelte# Reactive path navigation tracking
-│   │   │   ├── LessonView.svelte # Lesson body & OCR grading interactive box
-│   │   │   └── SelectionGrid.svelte # Clean grid layout for classes/subjects/etc.
-│   │   ├── App.svelte            # Main router & app state coordinator
-│   │   └── main.js               # Svelte entry point
+│   │   ├── style.css             # Base styles
+│   │   └── main.js               # Vanilla JS entry point
 │   ├── index.html                # App entry template
-│   ├── vite.config.js            # Build configuration for static output
-│   ├── package.json              # Frontend dev dependencies (svelte, vite)
+│   ├── package.json              # Frontend dev dependencies (vite)
 │   └── package-lock.json
 │
 ├── nginx/
@@ -71,7 +66,7 @@ node server.js
 ```
 The API server runs locally on `http://localhost:5000`.
 
-### 3. Build & Run the Svelte Frontend
+### 3. Build & Run the Frontend
 Install frontend packages and start the Vite dev server (for local testing):
 ```bash
 cd ../frontend
@@ -87,7 +82,7 @@ Open your browser to the URL displayed in your terminal (usually `http://localho
 To turn your Raspberry Pi into an offline learning hotspot, follow these deployment steps:
 
 ### 1. Build the Frontend for Production
-Compile the Svelte application into optimized static assets (`index.html`, `js`, `css`):
+Compile the application into optimized static assets (`index.html`, `js`, `css`):
 ```bash
 cd frontend
 npm run build
@@ -115,7 +110,7 @@ server {
     listen 80;
     server_name omninode.local;
 
-    # Serve Svelte compiled static assets
+    # Serve compiled static assets
     root /var/www/omninode/dist;
     index index.html;
 
