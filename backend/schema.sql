@@ -8,29 +8,50 @@ CREATE TABLE IF NOT EXISTS users (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Lessons/Content Table
--- Stores the metadata for the offline PDFs, videos, or SMS riddles hosted on the node
-CREATE TABLE IF NOT EXISTS lessons (
+-- Classes Table (e.g., Grade 1, Grade 2)
+CREATE TABLE IF NOT EXISTS classes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    level INTEGER NOT NULL UNIQUE,
+    name TEXT NOT NULL
+);
+
+-- Subjects Table (e.g., Math for Grade 1)
+CREATE TABLE IF NOT EXISTS subjects (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    class_id INTEGER NOT NULL,
+    FOREIGN KEY (class_id) REFERENCES classes (id)
+);
+
+-- Chapters Table (e.g., Fractions for Math)
+CREATE TABLE IF NOT EXISTS chapters (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    subject_id INTEGER NOT NULL,
+    FOREIGN KEY (subject_id) REFERENCES subjects (id)
+);
+
+-- Topics/Content Table (Replacing the old "Lessons" table)
+CREATE TABLE IF NOT EXISTS topics (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
-    subject TEXT NOT NULL,
+    chapter_id INTEGER NOT NULL,
     content_type TEXT NOT NULL CHECK (content_type IN ('pdf', 'video', 'sms_riddle')),
     file_path TEXT, -- Nullable, used if the content is a file on the Raspberry Pi
     sms_content TEXT, -- Nullable, used if the content is an SMS riddle
-    class INTEGER NOT NULL, 
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    FOREIGN KEY (chapter_id) REFERENCES chapters (id)
 );
 
 -- Assignments Table
--- Links a student to a specific lesson that they need to complete or have completed
+-- Links a student to a specific topic that they need to complete or have completed
 CREATE TABLE IF NOT EXISTS assignments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     student_id INTEGER NOT NULL,
-    lesson_id INTEGER NOT NULL,
+    topic_id INTEGER NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('pending', 'completed')),
     assigned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (student_id) REFERENCES users (id),
-    FOREIGN KEY (lesson_id) REFERENCES lessons (id)
+    FOREIGN KEY (topic_id) REFERENCES topics (id)
 );
 
 -- Submissions Table
