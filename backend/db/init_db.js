@@ -19,6 +19,7 @@ function initializeDatabase() {
     const insertClass = db.prepare('INSERT OR IGNORE INTO classes (level, name) VALUES (?, ?)');
     const insertSubject = db.prepare('INSERT OR IGNORE INTO subjects (name, class_id) VALUES (?, ?)');
     const insertChapter = db.prepare('INSERT OR IGNORE INTO chapters (name, subject_id) VALUES (?, ?)');
+    const insertTopic = db.prepare('INSERT OR IGNORE INTO topics (title, chapter_id, content_type, file_path, sms_content) VALUES (?, ?, ?, ?, ?)');
     
     // Insert classes
     insertClass.run(1, 'Grade 1');
@@ -42,6 +43,12 @@ function initializeDatabase() {
     insertChapter.run('Conjugation', 5);
     insertChapter.run('Synonyms & Antonyms', 5);
     insertChapter.run('Sentence Structuring', 5);
+
+    // Insert topics for Addition & Subtraction (Chapter 1)
+    insertTopic.run('Intro to Addition', 1, 'video', '/assets/addition_intro.mp4', null);
+    insertTopic.run('Basic Subtraction', 1, 'pdf', '/assets/subtraction_basics.pdf', null);
+    insertTopic.run('Math Riddle 1', 1, 'sms_riddle', null, 'What is 2 + 2?');
+
 
     console.log('Seed data inserted.');
   } catch (err) {

@@ -1,18 +1,31 @@
 import Fastify from 'fastify';
+import fastifyStatic from '@fastify/static';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import healthRoutes from './src/routes/healthRoutes.js';
 import classRoutes from './src/routes/classRoutes.js';
 import subjectRoutes from './src/routes/subjectRoutes.js';
 import chapterRoutes from './src/routes/chapterRoutes.js';
+import topicRoutes from './src/routes/topicRoutes.js';
 
 const fastify = Fastify({
   logger: true
 });
 
-// Register Routes
 fastify.register(healthRoutes);
 fastify.register(classRoutes);
 fastify.register(subjectRoutes);
 fastify.register(chapterRoutes);
+fastify.register(topicRoutes);
+
+// Register Static File Plugin
+fastify.register(fastifyStatic, {
+  root: path.join(__dirname, '../assets'),
+  prefix: '/assets/', 
+});
 
 // Run the server!
 const start = async () => {
