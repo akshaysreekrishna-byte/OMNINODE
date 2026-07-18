@@ -1,5 +1,8 @@
 import Fastify from 'fastify';
 import healthRoutes from './src/routes/healthRoutes.js';
+import classRoutes from './src/routes/classRoutes.js';
+import subjectRoutes from './src/routes/subjectRoutes.js';
+import chapterRoutes from './src/routes/chapterRoutes.js';
 
 const fastify = Fastify({
   logger: true
@@ -7,6 +10,9 @@ const fastify = Fastify({
 
 // Register Routes
 fastify.register(healthRoutes);
+fastify.register(classRoutes);
+fastify.register(subjectRoutes);
+fastify.register(chapterRoutes);
 
 // Run the server!
 const start = async () => {
