@@ -1,5 +1,15 @@
 import { getSubjectData } from "../controllers/SubjectController.js";
 
+const subjectSchema = {
+  params: {
+    type: 'object',
+    required: ['class_id'],
+    properties: {
+      class_id: { type: 'integer' }
+    }
+  }
+};
+
 export default async function subjectRoutes(fastify, options) {
-  fastify.get("/api/class/:class_id", getSubjectData);
+  fastify.get("/api/class/:class_id", { schema: subjectSchema }, getSubjectData);
 }

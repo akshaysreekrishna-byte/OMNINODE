@@ -5,13 +5,13 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-import healthRoutes from './src/routes/healthRoutes.js';
 import classRoutes from './src/routes/classRoutes.js';
 import subjectRoutes from './src/routes/subjectRoutes.js';
 import chapterRoutes from './src/routes/chapterRoutes.js';
 import topicRoutes from './src/routes/topicRoutes.js';
 
 import cors from "@fastify/cors";   // Add this with the other imports
+import 'dotenv/config';
 
 const fastify = Fastify({
   logger: true
@@ -22,8 +22,12 @@ await fastify.register(cors, {
   origin: true
 });
 
+fastify.setErrorHandler(function (error, request, reply) {
+  this.log.error(error);
+  reply.status(500).send({ status: false, error: 'Internal Server Error', message: error.message });
+});
+
 // Existing code
-fastify.register(healthRoutes);
 fastify.register(classRoutes);
 fastify.register(subjectRoutes);
 fastify.register(chapterRoutes);
@@ -38,7 +42,8 @@ fastify.register(fastifyStatic, {
 // Run the server!
 const start = async () => {
   try {
-    await fastify.listen({ port: 5000, host: '0.0.0.0' });
+    const port = process.env.PORT || 5000;
+    await fastify.listen({ port, host: '0.0.0.0' });
     console.log(`Server listening on ${fastify.server.address().port}`);
   } catch (err) {
     fastify.log.error(err);
@@ -46,12 +51,10 @@ const start = async () => {
   }
 };
 
-// Start the server if this file is run directly
-// This check allows us to import the fastify instance for testing without starting the server
-fastify.get('/', async (request, reply) => {
-  return { message: 'Backend is working!' };
-});
+
+if (process.argv[1] === new URL(import.meta.url).pathname) {
   start();
+}
 
 
 export { fastify };
