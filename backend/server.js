@@ -11,10 +11,18 @@ import subjectRoutes from './src/routes/subjectRoutes.js';
 import chapterRoutes from './src/routes/chapterRoutes.js';
 import topicRoutes from './src/routes/topicRoutes.js';
 
+import cors from "@fastify/cors";   // Add this with the other imports
+
 const fastify = Fastify({
   logger: true
 });
 
+// 👇 Add these lines here
+await fastify.register(cors, {
+  origin: true
+});
+
+// Existing code
 fastify.register(healthRoutes);
 fastify.register(classRoutes);
 fastify.register(subjectRoutes);
@@ -40,8 +48,10 @@ const start = async () => {
 
 // Start the server if this file is run directly
 // This check allows us to import the fastify instance for testing without starting the server
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+fastify.get('/', async (request, reply) => {
+  return { message: 'Backend is working!' };
+});
   start();
-}
+
 
 export { fastify };
