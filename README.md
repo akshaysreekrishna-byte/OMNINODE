@@ -75,9 +75,9 @@ node db/init_db.js
 ```
 
 ### 2. Run the Fastify Backend
-Start the backend server in development mode:
+Start the backend server in development mode (with hot-reload):
 ```bash
-node server.js
+npm start
 ```
 The API server runs locally on `http://localhost:5000`.
 
@@ -85,8 +85,8 @@ The API server runs locally on `http://localhost:5000`.
 Open the `android-app` directory in **Android Studio**.
 Wait for Gradle to sync dependencies, then click the **Run** button to deploy the app to an emulator or your connected physical Android device.
 
-### 4. Build & Run the Web Frontend (Optional)
-Install frontend packages and start the Vite dev server (for local testing of the legacy/web portal):
+### 4. Build & Run the Web Frontend
+Install frontend packages and start the Vite dev server for the website portal:
 ```bash
 cd ../frontend
 npm install
