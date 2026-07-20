@@ -8,7 +8,9 @@ The platform is optimized to be served directly from a Raspberry Pi hotspot via 
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** Vanilla HTML/CSS/JS (compiled to high-performance, static assets via Vite).
+- **Frontend:** 
+  - **Website/Portal:** Vanilla HTML/CSS/JS (compiled to high-performance, static assets via Vite).
+  - **Mobile App:** Native Android Application (built with Kotlin and Jetpack Compose).
 - **Backend:** [Fastify](https://fastify.dev/) (ultrafast, low-overhead Node.js web framework).
 - **Database:** [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) (very fast, synchronous SQLite3 library for Node.js).
 - **Web Server & Reverse Proxy:** [Nginx](https://nginx.org/) running on Raspberry Pi OS.
@@ -37,7 +39,14 @@ OMNINODE/
 │   ├── package.json              # Backend dependencies (fastify, better-sqlite3)
 │   └── package-lock.json
 │
-├── frontend/
+├── android-app/                # Native Android application codebase
+│   ├── build.gradle.kts          # Gradle build scripts
+│   ├── app/                      # Application module
+│   │   ├── src/                  # Kotlin source files and Jetpack Compose UI
+│   │   └── build.gradle.kts
+│   └── gradle/                   # Gradle wrapper
+│
+├── frontend/                     # Legacy/Web Portal (Vanilla JS + Vite)
 │   ├── public/                   # Static assets (images, offline videos)
 │   ├── src/
 │   │   ├── style.css             # Base styles
@@ -72,8 +81,12 @@ node server.js
 ```
 The API server runs locally on `http://localhost:5000`.
 
-### 3. Build & Run the Frontend
-Install frontend packages and start the Vite dev server (for local testing):
+### 3. Build & Run the Android App
+Open the `android-app` directory in **Android Studio**.
+Wait for Gradle to sync dependencies, then click the **Run** button to deploy the app to an emulator or your connected physical Android device.
+
+### 4. Build & Run the Web Frontend (Optional)
+Install frontend packages and start the Vite dev server (for local testing of the legacy/web portal):
 ```bash
 cd ../frontend
 npm install
