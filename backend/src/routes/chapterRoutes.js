@@ -12,5 +12,5 @@ const chapterSchema = {
 };
 
 export default async function chapterRoutes(fastify, options) {
-    fastify.get("/api/class/:class_id/:subject_id", { schema: chapterSchema }, getChapterData);
+   fastify.get("/api/class/:class_id/:subject_id", { schema: chapterSchema }, getChapterData);
 }

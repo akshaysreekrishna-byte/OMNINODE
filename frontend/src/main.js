@@ -1,23 +1,24 @@
 import "./style.css";
 import { createLayout } from "./components/Layout";
-import { loadClasses } from "./services/api";
-
-window.loadSubjects = function(id) {
-  fetch(`http://localhost:5000/api/class/${id}`)
-    .then(res => res.json())
-    .then(subjects => {
-      const html = subjects.map(s => `
-        <button class="btn">${s.name}</button>
-      `).join("");
-
-      document.querySelector(".lesson-grid").innerHTML = html;
-    })
-    .catch(err => {
-      console.error(err);
-      document.querySelector(".lesson-grid").innerHTML =
-        "<p>Error loading subjects</p>";
-    });
-};
+import { loadClasses, loadSubjects, loadChapters } from "./services/api";
 
 createLayout();
 loadClasses();
+
+window.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLElement)) return;
+
+  if (target.matches(".btn")) {
+    const text = target.textContent?.trim() || "";
+
+    if (text === "Grade 1" || text === "Grade 2") {
+      const gradeId = text.includes("1") ? 1 : 2;
+      loadSubjects(gradeId);
+    } else if (["Math", "English", "Science"].includes(text)) {
+      const subjectId = text === "Math" ? 1 : text === "English" ? 2 : 3;
+      loadChapters(subjectId);
+    }
+  }
+});

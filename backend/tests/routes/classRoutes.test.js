@@ -22,3 +22,22 @@ test('Class Route - GET /api/class', async (t) => {
     assert.ok(classItem.hasOwnProperty('name'));
   }
 });
+
+test('Class Route - GET /api/class/:id', async (t) => {
+  const response = await fastify.inject({
+    method: 'GET',
+    url: '/api/class/1'
+  });
+
+  assert.strictEqual(response.statusCode, 200);
+  const body = JSON.parse(response.payload);
+
+  assert.ok(Array.isArray(body), 'Expected body to be an array');
+
+  if (body.length > 0) {
+    const subject = body[0];
+    assert.ok(subject.hasOwnProperty('id'));
+    assert.ok(subject.hasOwnProperty('name'));
+    assert.ok(subject.hasOwnProperty('class_id'));
+  }
+});

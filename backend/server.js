@@ -52,9 +52,10 @@ const start = async () => {
 };
 
 
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
   start();
 }
+
 
 
 export { fastify };

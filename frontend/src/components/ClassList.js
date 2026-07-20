@@ -1,9 +1,14 @@
 export function renderClasses(classes) {
-  const html = classes.map(c => `
-    <button class="btn" onclick="window.loadSubjects(${c.id})">
-      ${c.name}
-    </button>
-  `).join("");
+  const container = document.querySelector(".lesson-grid");
+  container.innerHTML = "";
 
-  document.querySelector(".lesson-grid").innerHTML = html;
+  classes.forEach((c) => {
+    const button = document.createElement("button");
+    button.className = "btn";
+    button.textContent = c.name;
+    button.dataset.type = "class";
+    button.dataset.id = String(c.id);
+    button.addEventListener("click", () => window.loadSubjects(c.id));
+    container.appendChild(button);
+  });
 }

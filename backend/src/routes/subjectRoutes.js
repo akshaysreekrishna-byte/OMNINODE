@@ -11,5 +11,5 @@ const subjectSchema = {
 };
 
 export default async function subjectRoutes(fastify, options) {
-  fastify.get("/api/class/:class_id", { schema: subjectSchema }, getSubjectData);
+  fastify.get("/api/subjects/:class_id", { schema: subjectSchema }, getSubjectData);
 }
