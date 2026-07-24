@@ -12,10 +12,16 @@ export function renderTopics(topics) {
   topics.forEach((topic) => {
     const card = document.createElement("div");
     card.className = "topic-card";
-    card.innerHTML = `
-      <h3>${topic.title}</h3>
-      <p>${topic.content_type?.toUpperCase() || "Lesson"}</p>
-    `;
+
+    const title = document.createElement("h3");
+    title.textContent = topic.title;
+
+    const type = document.createElement("p");
+    type.textContent = topic.content_type?.toUpperCase() || "Lesson";
+
+    card.appendChild(title);
+    card.appendChild(type);
     container.appendChild(card);
-  });
+});
+
 }

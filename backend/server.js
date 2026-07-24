@@ -5,10 +5,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-import classRoutes from './src/routes/classRoutes.js';
-import subjectRoutes from './src/routes/subjectRoutes.js';
-import chapterRoutes from './src/routes/chapterRoutes.js';
-import topicRoutes from './src/routes/topicRoutes.js';
+import indexRoutes from './src/routes/indexRoutes.js';
 
 import cors from "@fastify/cors";   // Add this with the other imports
 import 'dotenv/config';
@@ -28,10 +25,7 @@ fastify.setErrorHandler(function (error, request, reply) {
 });
 
 // Existing code
-fastify.register(classRoutes);
-fastify.register(subjectRoutes);
-fastify.register(chapterRoutes);
-fastify.register(topicRoutes);
+fastify.register(indexRoutes);
 
 // Register Static File Plugin
 fastify.register(fastifyStatic, {
